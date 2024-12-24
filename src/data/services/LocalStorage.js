@@ -36,26 +36,46 @@ export const LocalStorage = {
   deleteTodoItemFromLocalStorage: (todoItemId) => {
     return new Promise((resolve, reject) => {
       LocalStorage.getTodoItemsFromLocalStorage().then((todoItems) => {
-          const newTodoItems = todoItems.filter(item => item.id !== todoItemId);
-          localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
-          resolve();
+        const newTodoItems = todoItems.filter(item => item.id !== todoItemId);
+        localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
+        resolve();
       })
     });
   },
 
-  updateTodoItemLocalStorage: (id, checked) => {
+  updateTodoItemCheckLocalStorage: (id, checked) => {
     return new Promise((resolve, reject) => {
         LocalStorage.getTodoItemsFromLocalStorage().then((todoItems) => {
-            const newTodoItems = todoItems.map(item =>
-                item.id === id ? {
-                    id: item.id,
-                    title: item.title,
-                    isDone: checked,
-                } : item
-            );
-            localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
-            resolve();
+          const newTodoItems = todoItems.map(item =>
+              item.id === id ? {
+                  id: item.id,
+                  title: item.title,
+                  isDone: checked,
+                  priority: item.priority
+              } : item
+          );
+
+          localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
+          resolve();
         })
+    });
+  },
+
+  updateTodoItemPriorityLocalStorage: (id, priority) => {
+    return new Promise((resolve, reject) => {
+      LocalStorage.getTodoItemsFromLocalStorage().then((todoItems) => {
+        const newTodoItems = todoItems.map(item => 
+            item.id === id ? {
+              id: item.id,
+              title: item.title,
+              isDone: item.isDone,
+              priority: priority
+            } : item
+          );
+
+        localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
+        resolve();
+      })
     });
   }
 }

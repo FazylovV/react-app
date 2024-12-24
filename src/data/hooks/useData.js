@@ -51,18 +51,33 @@ export const useDeleteTodoItem = () => {
     };
 }
 
-export const useUpdateTodoItem = () => {
+export const useTodoItemCheck = () => {
   const client = useQueryClient();
 
   const { mutate } = useMutation({
       mutationFn: ({ id, checked }) => {
-          return LocalStorage.updateTodoItemLocalStorage(id, checked);
+          return LocalStorage.updateTodoItemCheckLocalStorage(id, checked);
       },
       onSuccess: () => {
           client.invalidateQueries(['todo']);
       },
   });
 
+  return {
+      mutate
+  };
+}
+
+export const useTodoItemPriority = () => {
+  const client = useQueryClient();
+  const {mutate} = useMutation({
+      mutationFn: ({ id, priority }) => {
+          return LocalStorage.updateTodoItemPriorityLocalStorage(id, priority)
+      },
+      onSuccess: () => {
+          client.invalidateQueries(['todo']);
+      },
+  });
   return {
       mutate
   };
