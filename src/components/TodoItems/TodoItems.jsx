@@ -26,7 +26,12 @@ export const TodoItems = () => {
     // const clearedSearchValue = очистка от пробелов + приведение к одному из регистров
     // const isSearched = проверка вхождения строки поиска в строку заголовка
     // return isSearched
-    return true; // удалить после реализации фильтрации
+    if (searchValue.length < 4) return true;
+
+    const clearedTodoItemTitle = todoItem.title.replace(/\s+/g, '').toLowerCase();
+    const clearedSearchValue = searchValue.replace(/\s+/g, '').toLowerCase();
+    return clearedTodoItemTitle.indexOf(clearedSearchValue) !== -1;
+    // удалить после реализации фильтрации
   })
 
 
@@ -36,7 +41,7 @@ export const TodoItems = () => {
 
   return (
     <TodoItemsContainer>
-      <SearchInput value={searchValue} />
+      <SearchInput value={searchValue} setValue={setSearchValue}/>
       {todoItemsElements}
       <NewTodoItem />
     </TodoItemsContainer>
