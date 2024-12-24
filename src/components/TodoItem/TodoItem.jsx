@@ -35,12 +35,12 @@ export const TodoItem = ({title, checked, id}) => {
   const onClickDeleteHandler = () => {
     if (window.confirm(`Удалить элемент ${title}?`)) {
         mutate({ id });
-    }
+    };
   }
 
   return (
     <TodoItemContainer>
-      <TodoItemCheckbox checked={checked} />
+      <TodoItemCheckbox checked={checked} disabled={false} id={id} />
       <Title checked={checked}>
         {title}
       </Title>

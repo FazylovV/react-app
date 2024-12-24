@@ -1,4 +1,5 @@
 import styled, {css} from "styled-components";
+import { useUpdateTodoItem } from "../../data/hooks/useData";
 
 const disabledCss = css`
   background-color: #E2E2E2;
@@ -27,6 +28,14 @@ export const CheckboxContainer = styled.span(props => {
 });
 
 
-export const TodoItemCheckbox = ({disabled, checked}) => {
-  return <CheckboxContainer disabled={disabled} checked={checked} />
+export const TodoItemCheckbox = ({disabled, checked, id}) => {
+  const { mutate } = useUpdateTodoItem();
+
+  const onClickHandler = () => {
+      if (!disabled) {
+        mutate({ id, checked: !checked });
+      };
+  };
+
+  return <CheckboxContainer disabled={disabled} checked={checked} onClick={onClickHandler}/>
 }
